@@ -8,5 +8,5 @@ api = Api(app)
 api.add_resource(Relatives, "/relatives")
 
 if __name__=='__main__':
-    # app.run(host="0.0.0.0", port=5050)
-    app.run()
+    app.run(host="0.0.0.0", port=5050)
+    # app.run()

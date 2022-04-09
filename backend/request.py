@@ -25,7 +25,11 @@ def request_relative(relatives, holder = config.holder):
 def get_all_relatives():
     relatives = []
     request_relative(relatives)
-    json_data = {'relatives': relatives}
+    count = len(relatives)
+    json_data = {
+        'count': count,
+        'relatives': relatives
+    }
     with open('relatives.json', 'w') as f:
         json.dump(json_data, f)
     return json_data
