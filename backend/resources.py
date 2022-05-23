@@ -26,3 +26,20 @@ class Relatives(Resource):
                 'msg': "Something's happened",
                 'exception': ex
             }
+
+class IsRelated(Resource):
+    def post(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('holder', required=True)
+            args = parser.parse_args()
+            relatives_json = get_all_relatives(config.holder)
+            if args['holder'] in relatives_json.get('relatives'):
+                return {'related': True}
+            else:
+                return {'related': False}
+        except Exception as ex:
+            return {
+                'msg': "Something's happened",
+                'exception': ex
+            }
