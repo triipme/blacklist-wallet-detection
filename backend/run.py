@@ -1,8 +1,10 @@
 from resources import *
+from flask_cors import CORS
 
 #init
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 #endpoint(s)
 api.add_resource(Relatives, "/relatives")
