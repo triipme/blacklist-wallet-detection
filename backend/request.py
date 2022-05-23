@@ -3,15 +3,18 @@ import json
 from settings import config
 
 
-def send_request(holder = config.holder, token = config.token):
+def send_request(holder, token = config.token):
     #define requests
-    returned_value = requests.get("https://scan.tomochain.com/api/token-txs/trc21?holder={}&token={}".format(holder,token)) #raw value
-    jsonified_value = returned_value.json() #jsonified
-    items = jsonified_value['items']
-    return items
+    try:
+        returned_value = requests.get("https://scan.tomochain.com/api/token-txs/trc21?holder={}&token={}".format(holder,token)) #raw value
+        jsonified_value = returned_value.json() #jsonified
+        items = jsonified_value['items']
+        return items
+    except:
+        return []
 
 #relatives is a list which contains holders
-def request_relative(relatives, holder = config.holder):
+def request_relative(relatives, holder):
     print(f'Tracking user: {holder}')
     items = send_request(holder)
     for item in items:
@@ -22,9 +25,9 @@ def request_relative(relatives, holder = config.holder):
                 request_relative(relatives, holder=partner)
     return
 
-def get_all_relatives():
+def get_all_relatives(holder):
     relatives = []
-    request_relative(relatives)
+    request_relative(relatives, holder)
     count = len(relatives)
     json_data = {
         'count': count,
